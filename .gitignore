@@ -28,4 +28,3 @@ venv
 app.db
 microblog.log*
 .idea/
-migrations
