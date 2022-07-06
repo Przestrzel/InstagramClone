@@ -15,6 +15,7 @@ def login():
             return redirect(url_for('auth.login'))
         login_user(user)
         flash("You have successfully logged in!")
+        redirect(url_for('dashboard.index'))
     return render_template('auth/login.html', form=form)
 
 
@@ -31,3 +32,9 @@ def register():
             flash("You have successfully registered!")
             return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
+
+
+@bp.route('/logout', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
