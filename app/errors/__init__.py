@@ -1,4 +1,4 @@
-from flask 4import Blueprint
+from flask import Blueprint
 
 bp = Blueprint('errors', __name__)
 

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <h1>Sign In</h1>
+    <div class="row">
+        <div class="col-md-4">
+            Smth
+        </div>
+    </div>
+    <br>
+    <p>New User? <a href="{{ url_for('auth.login') }}">Click to Register</a></p>
+{% endblock %}

@@ -1,1 +1,12 @@
 {% extends 'bootstrap/base.html' %}
+
+{% block navbar %}
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container container-sm">
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
