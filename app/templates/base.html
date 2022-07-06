@@ -6,6 +6,13 @@
 {% endblock %}
 
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <div class="container container-sm">
         {% block app_content %}{% endblock %}
     </div>
