@@ -6,10 +6,11 @@ from app.auth.forms import LoginForm, RegisterForm
 from app.models import User
 
 
-@bp.before_request
-def before_request():
+@bp.after_request
+def after_request(response):
     if current_user.is_authenticated:
         return redirect(url_for('dashboard.index'))
+    return response
 
 
 @bp.route('/login', methods=['GET', 'POST'])
