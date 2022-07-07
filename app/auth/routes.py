@@ -6,6 +6,12 @@ from app.auth.forms import LoginForm, RegisterForm
 from app.models import User
 
 
+@bp.before_request
+def before_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard.index'))
+
+
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -15,7 +21,7 @@ def login():
             return redirect(url_for('auth.login'))
         login_user(user)
         flash("You have successfully logged in!")
-        redirect(url_for('dashboard.index'))
+        return redirect(url_for('dashboard.index'))
     return render_template('auth/login.html', form=form)
 
 
