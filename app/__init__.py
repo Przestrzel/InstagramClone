@@ -1,3 +1,5 @@
+import os.path
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -12,7 +14,7 @@ login = LoginManager()
 
 
 def create_app(config=Config):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../static')
     app.config.from_object(config)
 
     db.init_app(app)
@@ -27,6 +29,6 @@ def create_app(config=Config):
     app.register_blueprint(auth_bp)
 
     from app.dashboard import bp as dashboard_bp
-    app.register_blueprint(dashboard_bp)
+    app.register_blueprint(dashboard_bp, url_prefix='')
 
     return app

@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 @login_required
 def index():
     form = PostingForm()
+    posts = Post.query.filter_by(user_id=current_user.get_id()).all()
     if form.validate_on_submit():
         file = request.files['file']
         file_name = secure_filename(file.filename)
@@ -25,7 +26,7 @@ def index():
         db.session.commit()
         file.save(file_path)
 
-    return render_template('dashboard/index.html', form=form)
+    return render_template('dashboard/index.html', form=form, posts=posts)
 
 
 @bp.route('/explore', methods=["GET", "POST"])

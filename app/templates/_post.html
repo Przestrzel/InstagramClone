@@ -1,0 +1,15 @@
+<ul class="list-group">
+  <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-2">
+            <h3 class="display-6">
+                {{ post.title }}
+            </h3>
+        </div>
+    </div>
+  </li>
+  <li class="list-group-item">{{ post.description }}</li>
+  <li class="list-group-item">
+      <img class="img-responsive" src="{{ post.file_path }}" alt="photo">
+  </li>
+</ul>
