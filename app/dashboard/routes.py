@@ -1,11 +1,11 @@
 import os
-from flask import render_template, request, flash
+from flask import render_template, request, flash, url_for
 from app import db
 from app.dashboard import bp
 from app.models import Post
 from flask_login import login_required, current_user
 from app.dashboard.forms import PostingForm
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename, redirect
 
 
 @bp.route('/', methods=["GET", "POST"])
@@ -25,12 +25,23 @@ def index():
         db.session.add(post)
         db.session.commit()
         file.save(file_path)
-        flash("You have successfully add a post!")
-
+        flash("You have successfully added a post!")
+        return redirect(url_for('dashboard.index'))
     return render_template('dashboard/index.html', form=form, posts=posts)
 
 
 @bp.route('/explore', methods=["GET", "POST"])
 @login_required
 def explore():
-    return render_template('dashboard/explore.html')
+    posts = Post.query.filter(Post.user_id != current_user.id).all()
+    return render_template('dashboard/explore.html', posts=posts)
+
+
+@bp.route('/posts/remove/<int:id>')
+@login_required
+def remove_post(id: int):
+    post = Post.query.filter_by(id=id).first()
+    if post is not None:
+        db.session.delete(post)
+        db.session.commit()
+    return redirect(url_for('dashboard.index'))

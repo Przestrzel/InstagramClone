@@ -6,7 +6,16 @@
                 {{ post.title }}
             </h3>
         </div>
-    </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+            {% if current_user.id == post.user_id %}
+                <button onclick="window.location.href='{{ url_for('dashboard.remove_post', id=post.id) }}';" class="btn btn-danger">
+                    X
+                </button>
+            {% endif %}
+        </div>
+      </div>
   </li>
   <li class="list-group-item">{{ post.description }}</li>
   <li class="list-group-item">

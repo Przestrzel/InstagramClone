@@ -5,10 +5,7 @@
     <h1 class="display-4">
         Explore other people posts!
     </h1>
-    <div class="row">
-        <div class="col-md-4">
-            <h2 class="display-6">
-            </h2>
-        </div>
-    </div>
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
 {% endblock %}
