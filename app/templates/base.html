@@ -1,15 +1,17 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block navbar %}
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('dashboard.index') }}">Home</a></li>
+    <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
+        <ul class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="{{ url_for('dashboard.index') }}">Home</a>
         </ul>
-        <ul class="nav navbar-nav">
+
+        <ul class="navbar-nav ml-5">
             {% if current_user.is_anonymous %}
-            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <a class="navbar-brand" href="{{ url_for('auth.login') }}">Login</a>
             {% else %}
-            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                <a class="navbar-brand" href="{{ url_for('dashboard.explore') }}">Explore</a>
+                <a class="navbar-brand" href="{{ url_for('auth.logout') }}">Logout</a>
             {% endif %}
         </ul>
     </nav>
