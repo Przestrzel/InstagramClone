@@ -1,5 +1,5 @@
 import os
-from flask import render_template, request
+from flask import render_template, request, flash
 from app import db
 from app.dashboard import bp
 from app.models import Post
@@ -25,6 +25,7 @@ def index():
         db.session.add(post)
         db.session.commit()
         file.save(file_path)
+        flash("You have successfully add a post!")
 
     return render_template('dashboard/index.html', form=form, posts=posts)
 
