@@ -2,7 +2,7 @@ import os
 from flask import render_template, request, flash, url_for
 from app import db
 from app.dashboard import bp
-from app.models import Post
+from app.models import Post, PostLikes
 from flask_login import login_required, current_user
 from app.dashboard.forms import PostingForm
 from werkzeug.utils import secure_filename, redirect
@@ -41,7 +41,29 @@ def explore():
 @login_required
 def remove_post(id: int):
     post = Post.query.filter_by(id=id).first()
+    PostLikes.query.filter_by(post_id=id).delete()
     if post is not None:
         db.session.delete(post)
         db.session.commit()
     return redirect(url_for('dashboard.index'))
+
+
+@bp.route('/posts/like/<int:id>')
+@login_required
+def like_post(id: int):
+    post = Post.query.filter_by(id=id).first()
+    if post is not None:
+        post_like = PostLikes(post_id=post.id, user_id=current_user.get_id())
+        db.session.add(post_like)
+        db.session.commit()
+    return redirect(url_for('dashboard.explore'))
+
+
+@bp.route('/posts/dislike/<int:id>')
+@login_required
+def dislike_post(id: int):
+    post_like = PostLikes.query.filter_by(post_id=id, user_id=current_user.get_id()).first()
+    if post_like is not None:
+        db.session.delete(post_like)
+        db.session.commit()
+    return redirect(url_for('dashboard.explore'))

@@ -28,3 +28,19 @@ class Post(db.Model):
     title = db.Column(db.String(128), index=True)
     description = db.Column(db.String(512), index=True)
     file_path = db.Column(db.String(256))
+    likes = db.relationship('PostLikes', backref="liked", lazy="dynamic")
+
+    def like_amount(self):
+        return self.likes.count()
+
+    def do_user_like(self, user_id: int):
+        return self.likes.filter_by(user_id=user_id).first() is not None
+
+
+class PostLikes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer)
+
+    def do_user_like(self, id: int):
+        return self.user_id == id
